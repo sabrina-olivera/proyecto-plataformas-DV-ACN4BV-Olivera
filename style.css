@@ -47,11 +47,9 @@ header, footer {
 /* ── columnas ── */
 .columnas {
   display: flex;
-  flex-wrap: wrap;          
-  gap: 2%;                 
-  padding: 2% 4%;           
-  width: 100%;
-  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 2%;
+  padding: 2% 4%;
 }
 
 .col {
@@ -72,4 +70,19 @@ header, footer {
   color: var(--color-col-texto);
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+
+/* ── input y botón ── */
+#taskInput {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#btn-agregar {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
 }

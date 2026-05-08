@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To do list | Appnirvas</title>
+    <title>To do list</title>
     <link rel="stylesheet" href="style.css">
    
 </head>
@@ -14,21 +14,25 @@
     </header>
 
     <main>
-        <button type="button">Click</button>
+  
         <h1>To-do list</h1>
 
     <section class="columnas">
     <div class="col">
-        <h2>Columna 1</h2>
-        <p>Contenido de la primera columna.</p>
+        <h2>Hacer</h2>
+        <div class="input-wrapper">
+            <input type="text" id="taskInput" placeholder="Nueva tarea..." maxlength="100" />
+            <button type="button" id="btn-agregar">Agregar</button>
+        </div>
+            <div id="tareas"></div>
     </div>
     <div class="col">
-        <h2>Columna 2</h2>
-        <p>Contenido de la segunda columna.</p>
+        <h2>En proceso</h2>
+        <ul id="lista-enprogreso" class="task-list"></ul>
     </div>
     <div class="col">
-        <h2>Columna 3</h2>
-        <p>Contenido de la tercera columna.</p>
+        <h2>Terminado</h2>
+        <ul id="lista-hecho" class="task-list"></ul>
     </div>
     </section>
         

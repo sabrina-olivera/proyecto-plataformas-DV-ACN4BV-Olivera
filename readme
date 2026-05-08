@@ -1,0 +1,7 @@
+/*
+Es una lista de tareas de escritorio, simple estilo Kanban
+Tiene 3 columnas indicando el estado de cada tarea 'por hacer', 'en proceso', 'termnado'
+Se podrán agregar tareas en la columna de 'por hacer'
+    - Luego cada tarea tendrá botones, para moverla a la columna que necesite
+    - Y también tendrán botón para editar y eliminar
+*/
