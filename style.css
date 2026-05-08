@@ -1,0 +1,75 @@
+:root {
+    --color-primario: #d3622d;
+    --color-primario-texto: #faf28a;
+
+    --color-secundario: #6D8EC5;
+    --color-secundario-texto: #faf28a;
+
+    --color-fondo: #fbf7bf;
+    --color-fondo-texto: #d3622d;
+
+     /* columnas */
+    --color-col-fondo: #ffffff;
+    --color-col-texto: #444444;
+    --color-col-sombra: rgba(211, 98, 45, 0.1);
+}
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+header {
+    height: 15vh;
+    background-color: var(--color-primario);
+    color: var(--color-primario-texto);
+}
+
+main {
+    min-height: 80vh;
+    background-color: var(--color-fondo);
+    color: var(--color-fondo-texto)
+}
+
+footer {
+    height: 5vh;
+    background-color: var(--color-secundario);
+    color: var(--color-secundario-texto)
+}
+
+header, footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* ── columnas ── */
+.columnas {
+  display: flex;
+  flex-wrap: wrap;          
+  gap: 2%;                 
+  padding: 2% 4%;           
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.col {
+  flex: 1 1 200px;          
+  background-color: var(--color-col-fondo);
+  border-radius: 8px;
+  padding: 5% 4%;          
+  box-shadow: 0 2px 8px var(--color-col-sombra);
+}
+
+.col h2 {
+  color: var(--color-primario);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.col p {
+  color: var(--color-col-texto);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
