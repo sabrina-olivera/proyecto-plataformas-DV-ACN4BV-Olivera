@@ -7,16 +7,28 @@ const input = document.querySelector('#taskInput')
 const boton = document.querySelector('#btn-agregar')
 const tarea = document.querySelector('#tareas')
 
-// funciones
 
+//visualizar estado del localStorage desde consola
+function cargarTareas() {
+  const arrayPendiente = JSON.parse(localStorage.getItem('tareas'))
+    if (arrayPendiente) {
+    arrayPendiente.forEach(function(texto) {
+      crearTarea(texto)
+    })
+  }
+  console.table(arrayPendiente)
+}
+cargarTareas()
+
+// funciones
 function crearTarea(texto) {
   tareas.push(texto)
-  //li que los contiene texto y botones
+  //li que contiene items y botones
   const li = document.createElement('li')
 
   //guardamos texto
   const span = document.createElement('span')
-  span.textContent = texto
+  span.innerText = texto
   console.log(texto)
 
   //creamos botones
@@ -25,18 +37,21 @@ function crearTarea(texto) {
   btnEliminar.innerHTML = '<i class="fa-solid fa-circle-minus"></i>'
   btnflechaDer.innerHTML = '<i class="fa-solid fa-circle-right"></i>'
 
-btnEliminar.addEventListener('click', function(elemento) {
-  const li = elemento.target.closest('li')
-  li.remove()
-})
+  btnEliminar.addEventListener('click', function(elemento) {
+    const index = tareas.indexOf(texto)  // usa 'texto' para encontrarlo y eliminarlo del array
+    tareas.splice(index, 1)
+    li.remove()
+    guardarTareas()
+  })
 
   //los guardamos en el item
   li.appendChild(span)
   li.appendChild(btnEliminar)
   li.appendChild(btnflechaDer)
 
-  //ponemos li dentro del contenedor (el div#tareas)
   tarea.appendChild(li)
+
+  guardarTareas() //guardamos en localStorage
   
 }
 
@@ -46,3 +61,7 @@ boton.addEventListener('click', function() {
   input.value = ''
 })
 
+//USO DE LOCAL STORAGE - guardamos en el mismo, cada item de la lista de tareas
+function guardarTareas() {
+  localStorage.setItem('tareas', JSON.stringify(tareas))
+}
