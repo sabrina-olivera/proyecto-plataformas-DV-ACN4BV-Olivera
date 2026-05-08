@@ -10,6 +10,7 @@ const tarea = document.querySelector('#tareas')
 // funciones
 
 function crearTarea(texto) {
+  tareas.push(texto)
   //li que los contiene texto y botones
   const li = document.createElement('li')
 
@@ -23,6 +24,11 @@ function crearTarea(texto) {
   const btnflechaDer = document.createElement('button')
   btnEliminar.innerHTML = '<i class="fa-solid fa-circle-minus"></i>'
   btnflechaDer.innerHTML = '<i class="fa-solid fa-circle-right"></i>'
+
+btnEliminar.addEventListener('click', function(elemento) {
+  const li = elemento.target.closest('li')
+  li.remove()
+})
 
   //los guardamos en el item
   li.appendChild(span)
@@ -39,3 +45,4 @@ boton.addEventListener('click', function() {
   crearTarea(texto)
   input.value = ''
 })
+
