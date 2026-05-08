@@ -1,11 +1,17 @@
 // array donde se guardan tareas
 const tareas = [] 
+const enProceso = []
+const terminado = []
 
 
 // creamos constantes
 const input = document.querySelector('#taskInput')
 const boton = document.querySelector('#btn-agregar')
+
 const tarea = document.querySelector('#tareas')
+const contenedorEnProceso = document.querySelector('#lista-en-progreso')
+const contenedorTerminado = document.querySelector('#lista-hecho')
+
 
 
 //visualizar estado del localStorage desde consola
@@ -20,7 +26,21 @@ function cargarTareas() {
 }
 cargarTareas()
 
+function tareasEnProceso() {
+  const arrayPendiente = JSON.parse(localStorage.getItem('enProceso'))
+    if (arrayPendiente) {
+    arrayPendiente.forEach(function(texto) {
+      crearTareaEnProceso(texto)
+    })
+  }
+  console.table(arrayPendiente)
+}
+tareasEnProceso()
+
+
+
 // funciones
+//FUNCIÓN CREAR TAREA/////////////////////////////////////
 function crearTarea(texto) {
   tareas.push(texto)
   //li que contiene items y botones
@@ -29,7 +49,6 @@ function crearTarea(texto) {
   //guardamos texto
   const span = document.createElement('span')
   span.innerText = texto
-  console.log(texto)
 
   //creamos botones
   const btnEliminar = document.createElement('button')
@@ -37,12 +56,26 @@ function crearTarea(texto) {
   btnEliminar.innerHTML = '<i class="fa-solid fa-circle-minus"></i>'
   btnflechaDer.innerHTML = '<i class="fa-solid fa-circle-right"></i>'
 
+  //funcion para el botón eliminar//////////////////
   btnEliminar.addEventListener('click', function(elemento) {
     const index = tareas.indexOf(texto)  // usa 'texto' para encontrarlo y eliminarlo del array
     tareas.splice(index, 1)
     li.remove()
     guardarTareas()
   })
+
+  //funcion para el botón de flecha///////////////
+  btnflechaDer.addEventListener('click', function() {
+    const index = tareas.indexOf(texto)  // busca en el array
+    tareas.splice(index, 1)              // elimina de 'tareas'
+    li.remove()                          // elimina del DOM
+
+    crearTareaEnProceso(texto)           // crea el li en la columna del medio
+    
+    guardarTareas()
+    guardarTareasEnProceso()
+  })
+
 
   //los guardamos en el item
   li.appendChild(span)
@@ -55,13 +88,47 @@ function crearTarea(texto) {
   
 }
 
+//FUNCIÓN AGREGAR TAREA A COLUMNA 'EN PROCESO'/////////////////////////
+function crearTareaEnProceso(texto) {
+  enProceso.push(texto)
+  const li = document.createElement('li')
+
+  const span = document.createElement('span')
+  span.innerText = texto
+
+  const btnEliminar = document.createElement('button')
+  const btnflechaDer = document.createElement('button')
+  btnEliminar.innerHTML = '<i class="fa-solid fa-circle-minus"></i>'
+  btnflechaDer.innerHTML = '<i class="fa-solid fa-circle-right"></i>'
+
+  btnEliminar.addEventListener('click', function(elemento) {
+    const index = enProceso.indexOf(texto)
+    enProceso.splice(index, 1)
+    li.remove()
+    guardarTareasEnProceso()
+  })
+
+  li.appendChild(span)
+  li.appendChild(btnEliminar)
+  li.appendChild(btnflechaDer)
+
+  contenedorEnProceso.appendChild(li)
+}
+
+
+
+//eliminar espacios del input y una vez cargado elemento, borrar contenido
 boton.addEventListener('click', function() {
   const texto = input.value.trim()
   crearTarea(texto)
   input.value = ''
 })
 
-//USO DE LOCAL STORAGE - guardamos en el mismo, cada item de la lista de tareas
+//USO DE LOCAL STORAGE - guardamos en el mismo, cada item de la lista de tareas - SEGÚN CADA COLUMNA
 function guardarTareas() {
   localStorage.setItem('tareas', JSON.stringify(tareas))
+}
+
+function guardarTareasEnProceso() {
+  localStorage.setItem('enProceso', JSON.stringify(enProceso))
 }
