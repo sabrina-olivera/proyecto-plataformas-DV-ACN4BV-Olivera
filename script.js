@@ -8,20 +8,34 @@ const boton = document.querySelector('#btn-agregar')
 const tarea = document.querySelector('#tareas')
 
 // funciones
-function crearTarea(texto) {
-  // guardamos en array
-  tareas.push(texto)
-  console.log(tareas.texto)
 
-  // creamos item y lo agrega dinámicamente
+function crearTarea(texto) {
+  //li que los contiene texto y botones
   const li = document.createElement('li')
-  li.innerText = texto
+
+  //guardamos texto
+  const span = document.createElement('span')
+  span.textContent = texto
+  console.log(texto)
+
+  //creamos botones
+  const btnEliminar = document.createElement('button')
+  const btnflechaDer = document.createElement('button')
+  btnEliminar.innerHTML = '<i class="fa-solid fa-circle-minus"></i>'
+  btnflechaDer.innerHTML = '<i class="fa-solid fa-circle-right"></i>'
+
+  //los guardamos en el item
+  li.appendChild(span)
+  li.appendChild(btnEliminar)
+  li.appendChild(btnflechaDer)
+
+  //ponemos li dentro del contenedor (el div#tareas)
   tarea.appendChild(li)
+  
 }
 
 boton.addEventListener('click', function() {
   const texto = input.value.trim()
   crearTarea(texto)
   input.value = ''
-  console.log('llego btn')
 })
