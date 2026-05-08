@@ -67,7 +67,7 @@ function crearTarea(texto) {
   //funcion para el botón de flecha///////////////
   btnflechaDer.addEventListener('click', function() {
     const index = tareas.indexOf(texto)  // busca en el array
-    tareas.splice(index, 1)              // elimina de 'tareas'
+    tareas.splice(index, 1)              // elimina de columna 1
     li.remove()                          // elimina del DOM
 
     crearTareaEnProceso(texto)           // crea el li en la columna del medio
@@ -97,10 +97,13 @@ function crearTareaEnProceso(texto) {
   span.innerText = texto
 
   const btnEliminar = document.createElement('button')
-  const btnflechaDer = document.createElement('button')
   btnEliminar.innerHTML = '<i class="fa-solid fa-circle-minus"></i>'
+  const btnflechaDer = document.createElement('button')
   btnflechaDer.innerHTML = '<i class="fa-solid fa-circle-right"></i>'
+  const btnflechaIzq = document.createElement('button')
+  btnflechaIzq.innerHTML = '<i class="fa-solid fa-circle-left"></i>'
 
+  //elimina item de la columna del medio
   btnEliminar.addEventListener('click', function(elemento) {
     const index = enProceso.indexOf(texto)
     enProceso.splice(index, 1)
@@ -108,9 +111,23 @@ function crearTareaEnProceso(texto) {
     guardarTareasEnProceso()
   })
 
+  //devuelve item a la columna de la izqueirda
+  btnflechaIzq.addEventListener('click', function() {
+      const index = enProceso.indexOf(texto)
+      enProceso.splice(index, 1)
+      li.remove()
+
+      crearTarea(texto)
+
+      guardarTareas()
+      guardarTareasEnProceso()
+  })
+
+  //visibilizar items y sus botones
   li.appendChild(span)
-  li.appendChild(btnEliminar)
+  li.appendChild(btnflechaIzq)
   li.appendChild(btnflechaDer)
+  li.appendChild(btnEliminar)
 
   contenedorEnProceso.appendChild(li)
 }
