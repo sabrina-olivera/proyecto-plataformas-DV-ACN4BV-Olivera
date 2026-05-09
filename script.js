@@ -37,6 +37,17 @@ function tareasEnProceso() {
 }
 tareasEnProceso()
 
+function tareasTerminadas() {
+  const arrayPendiente = JSON.parse(localStorage.getItem('terminado'))
+    if (arrayPendiente) {
+    arrayPendiente.forEach(function(texto) {
+      crearTareaTerminado(texto)
+    })
+  }
+  console.table(arrayPendiente)
+}
+tareasTerminadas()
+
 
 
 // funciones
@@ -123,6 +134,19 @@ function crearTareaEnProceso(texto) {
       guardarTareasEnProceso()
   })
 
+  //envía tarea a la columna derecha final
+  btnflechaDer.addEventListener('click', function() {
+    const index = enProceso.indexOf(texto) 
+    enProceso.splice(index, 1)              
+    li.remove()                         
+
+   crearTareaTerminado(texto)   
+    
+    guardarTareasEnProceso()
+    guardarTareasTerminado()
+  })
+
+
   //visibilizar items y sus botones
   li.appendChild(span)
   li.appendChild(btnflechaIzq)
@@ -131,6 +155,52 @@ function crearTareaEnProceso(texto) {
 
   contenedorEnProceso.appendChild(li)
 }
+
+
+//AGREGAR TAREA A COLUMNA 'TERMINADO'//////////////////////////////////////////////////////////
+function crearTareaTerminado(texto) {
+  terminado.push(texto)
+  const li = document.createElement('li')
+
+  const span = document.createElement('span')
+  span.innerText = texto
+
+  const btnEliminar = document.createElement('button')
+  btnEliminar.innerHTML = '<i class="fa-solid fa-circle-minus"></i>'
+  const btnflechaIzq = document.createElement('button')
+  btnflechaIzq.innerHTML = '<i class="fa-solid fa-circle-left"></i>'
+
+  //elimina item de la columna del medio
+  btnEliminar.addEventListener('click', function(elemento) {
+    const index = terminado.indexOf(texto)
+    terminado.splice(index, 1)
+    li.remove()
+    guardarTareasTerminado()
+  })
+
+  //devuelve item a la columna del medio
+  btnflechaIzq.addEventListener('click', function() {
+      const index = terminado.indexOf(texto)
+      enProceso.splice(index, 1)
+      li.remove()
+
+      crearTareaEnProceso(texto)
+
+      guardarTareas()
+      guardarTareasEnProceso()
+  })
+
+  //visibilizar items y sus botones
+  li.appendChild(span)
+  li.appendChild(btnflechaIzq)
+  li.appendChild(btnEliminar)
+
+  contenedorTerminado.appendChild(li)
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -148,4 +218,8 @@ function guardarTareas() {
 
 function guardarTareasEnProceso() {
   localStorage.setItem('enProceso', JSON.stringify(enProceso))
+}
+
+function guardarTareasTerminado() {
+  localStorage.setItem('terminado', JSON.stringify(terminado))
 }
